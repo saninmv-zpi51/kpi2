@@ -1,0 +1,670 @@
+<!doctype html>
+<html lang="uk">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>ZPI-51_appWEB-SaninMariia-FIOT-2025</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Bona+Nova:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+
+  <style>
+    :root{
+      --bg:#ffffff;
+      --ink:#111;
+      --line:#333;
+      --muted:#666;
+      --tab:#f5f5f5;
+      --active:#fff3a6;
+      --radius:18px;
+    }
+    *{box-sizing:border-box;}
+    body{
+      margin:0;
+      font-family: 'Bona Nova', serif;
+      color: #00232e;
+      background:var(--bg);
+    }
+
+    /* Page */
+    .page{
+      max-width: 1100px;
+      margin: 18px auto;
+      padding: 14px 16px 20px;
+      border: 2px solid transparent; /* щоб на скріншоті було чисто */
+    }
+
+    /* Header */
+    header{
+      display:grid;
+      grid-template-columns: 1fr 170px;
+      gap: 12px;
+      align-items:start;
+      margin-bottom: 12px;
+    }
+    .title{
+      text-align:center;
+      line-height:1.2;
+    }
+    .title h1{
+      margin:0;
+      font-size: 20px;
+      font-weight: 700;
+      text-transform: uppercase;
+    }
+    .title h2{
+      margin:6px 0 0;
+      font-size: 16px;
+      font-weight: 700;
+    }
+    .title p{
+      margin:8px 0 0;
+      font-size: 14px;
+    }
+
+    .photo{
+      border: none;
+      height: 120px;
+      display:flex;
+      flex-direction:column;
+      align-items:center;
+      justify-content:center;
+      gap:6px;
+      font-size:14px;
+    }
+    .photo small{ color: var(--muted); }
+
+    /* Tabs */
+    .tabs{
+      display:flex;
+      gap:10px;
+      flex-wrap:wrap;
+      justify-content:space-between;
+      margin: 8px 0 14px;
+      padding: 0;
+      list-style:none;
+    }
+    .tabs button{
+      border: none;
+      background: #B4DBDB;
+      border-radius: 6px;
+      padding: 12px 14px;
+      cursor:pointer;
+      font-size: 14px;
+      text-align:left;
+      font-family: 'Bona Nova', serif;
+      color: #00232e;
+      box-shadow:
+           0px 0px 4px #548384,
+           inset 0px 2px 2px 1px rgba(255, 255, 255, 0.9);
+    }
+    .tabs button:hover{
+        background: #CDF0F6;
+        box-shadow:
+            0px 0px 4px 2px #008599,
+            inset 0px 4px 4px 1px rgba(255, 255, 255, 0.9);
+    }
+    .tabs button:active{
+        background:#90C5CD;
+        box-shadow: 0px 0px 4px #548384;
+    }
+    .tabs button.is-active{
+        background:#90C5CD;
+        outline: 3px solid rgba(0,0,0,0.08);
+        font-weight:700;
+        color: #063c4d;
+        box-shadow: 0px 0px 4px #548384;
+    }
+
+    /* Layout under tabs */
+    .layout{
+      display:grid;
+      grid-template-columns: 300px 1fr;
+      gap: 16px;
+      align-items:start;
+    }
+
+    /* Left menu (oval buttons) */
+    aside{
+      padding-top: 4px;
+    }
+    .menu{
+      display:flex;
+      flex-direction:column;
+      gap: 10px;
+      
+    }
+    .menu button{
+      border: none;
+      background: #B4DBDB;
+      border-radius: 6px;
+      padding: 12px 14px;
+      cursor:pointer;
+      font-size: 14px;
+      text-align:center;
+      font-family: 'Bona Nova', serif;
+      color: #00232e;
+      box-shadow:
+        0px 0px 4px #548384,
+        inset 0px 2px 2px 1px rgba(255, 255, 255, 0.9);
+    }
+    .menu button:hover{
+        background: #CDF0F6;
+        box-shadow:
+            0px 0px 4px 2px #008599,
+            inset 0px 4px 4px 1px rgba(255, 255, 255, 0.9);
+    }
+    .menu button:active{
+        background:#90C5CD;
+        box-shadow: 0px 0px 4px #548384;
+    }
+    .menu button.is-active{
+      background:#90C5CD;
+      outline: 3px solid rgba(0,0,0,0.08);
+      font-weight:700;
+      color: #063c4d;
+      box-shadow: 0px 0px 4px #548384;
+    }
+    .menu .indent{
+      margin-right: auto;
+      width: calc(100% - 26px);
+      text-align:center;
+      padding: 10px 12px;
+    }
+    .menu .wide{
+      padding: 14px 14px;
+    }
+
+    /* Main content frame */
+    main{
+      border: 2px solid var(--line);
+      min-height: 520px;
+      padding: 18px;
+      position:relative;
+    }
+    .content-title{
+      text-align:center;
+      margin: 0 0 12px;
+      font-size: 18px;
+      font-weight: 700;
+    }
+    .hint{
+      text-align:center;
+      color: var(--muted);
+      margin: 0 0 16px;
+      font-size: 14px;
+    }
+
+    /* Sections */
+    section[hidden]{ display:none !important; }
+    section h3{
+      margin: 12px 0 8px;
+      font-size: 16px;
+    }
+    section p, section li{
+      font-size: 14px;
+      line-height:1.35;
+    }
+    code, pre{
+      font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, "Liberation Mono", monospace;
+      font-size: 13px;
+    }
+    pre{
+      border:1px solid #ccc;
+      padding: 10px;
+      overflow:auto;
+      background:#fafafa;
+    }
+
+    footer{
+      margin-top: 14px;
+      font-size: 12px;
+      color: var(--muted);
+      text-align:center;
+    }
+
+    @media (max-width: 900px){
+      header{ grid-template-columns: 1fr; }
+      .photo{ max-width: 220px; }
+      .layout{ grid-template-columns: 1fr; }
+      .tabs{ justify-content:flex-start; }
+    }
+    .photo-frame{
+        width: 150px;
+        height: 120px;
+        overflow: hidden;
+        position: relative;
+        background: #fff;
+    }
+
+    .photo-frame img{
+        transform: scale(1.2);
+        transform-origin: center;
+    }
+    body{
+        background: linear-gradient(120deg, #B4DBDB, #CDF0F6, #088092);
+        background-size: 200% 200%;
+        animation: bgGradient 18s ease infinite;
+        position: relative;
+    }
+    body::before,
+    body::after{
+        content:"";
+        position: fixed;
+        inset: -40px;              
+        z-index: -1;               
+        pointer-events: none;
+        opacity: 0.55;
+        filter: blur(10px);
+    transform: translateZ(0); 
+    }
+
+    body::before{
+        background:
+            radial-gradient(circle at 20% 30%, rgba(255,255,255,0.35), transparent 45%),
+            radial-gradient(circle at 75% 40%, rgba(255,255,255,0.22), transparent 50%),
+            radial-gradient(circle at 50% 80%, rgba(0,133,153,0.18), transparent 55%);
+        animation: blobs1 26s ease-in-out infinite;
+    }
+    body::after{
+        background:
+            radial-gradient(circle at 35% 65%, rgba(255,255,255,0.18), transparent 48%),
+            radial-gradient(circle at 85% 75%, rgba(84,131,132,0.16), transparent 55%),
+            radial-gradient(circle at 10% 85%, rgba(144,197,205,0.20), transparent 60%);
+        animation: blobs2 34s ease-in-out infinite;
+    }
+
+    @keyframes bgGradient{
+        0%{ background-position: 0% 50%; }
+        50%{ background-position: 100% 50%; }
+        100%{ background-position: 0% 50%; }
+    }
+
+    @keyframes blobs1{
+        0%{ transform: translate(0,0) scale(1); }
+        50%{ transform: translate(-18px, 14px) scale(1.05); }
+        100%{ transform: translate(0,0) scale(1); }
+    }
+
+    @keyframes blobs2{
+        0%{ transform: translate(0,0) scale(1); }
+        50%{ transform: translate(16px, -12px) scale(1.06); }
+        100%{ transform: translate(0,0) scale(1); }
+    }
+
+    .page{ position: relative; z-index: 0; 
+    }
+    .kyiv-strip{
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      height: 120px;         
+      background-image: url("images/kyiv.png");
+      opacity: 0.75;
+      background-repeat: repeat-x;
+      background-position: 0 bottom;
+      background-size: auto 100%;
+      animation: kyiv-move 200s linear infinite;
+      pointer-events: none;    
+      z-index: 0;
+    }
+
+
+    @keyframes kyiv-move{
+      from{
+        background-position-x: 0;
+      }
+      to{
+        background-position-x: -2000px;
+      }
+    }
+  
+
+
+    .page{
+      position: relative;
+      z-index: 2;
+    }
+    .snow-bg{
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      z-index: 1;    
+      overflow: hidden;
+    }
+    .flake{
+      position: absolute;
+      width: 22px;
+      height: 22px;
+      background: url("images/snow.png") no-repeat center / contain;
+      opacity: 0.65;
+
+      animation:
+        fall var(--fallDur) linear infinite,
+        spin var(--spinDur) linear infinite;
+    }
+
+
+    @keyframes fall{
+      from { transform: translate(var(--driftX), -40px) rotate(0deg); }
+      to   { transform: translate(calc(var(--driftX) + var(--driftTo)), 110vh) rotate(0deg); }
+    }
+    @keyframes spin{
+      from { rotate: 0deg; }
+      to   { rotate: 360deg; }
+    }
+    .f1{ left: 8%;  top:-60px;  --fallDur: 28s; --spinDur: 18s; --driftX: 0px;  --driftTo: 40px; }
+    .f2{ left: 28%; top:-120px; --fallDur: 34s; --spinDur: 22s; --driftX: 0px;  --driftTo: -30px; }
+    .f3{ left: 52%; top:-90px;  --fallDur: 30s; --spinDur: 20s; --driftX: 0px;  --driftTo: 25px; }
+    .f4{ left: 73%; top:-140px; --fallDur: 38s; --spinDur: 26s; --driftX: 0px;  --driftTo: -35px; }
+    .f5{ left: 90%; top:-80px;  --fallDur: 32s; --spinDur: 24s; --driftX: 0px;  --driftTo: 30px; }
+    .f6{ left: 29%; top:-160px; --fallDur: 42s; --spinDur: 34s; --driftX:0px; --driftTo:-20px; }
+    .f7{ left: 34%; top:-110px; --fallDur: 36s; --spinDur: 26s; --driftX:0px; --driftTo: 35px; }
+    .f8{ left: 39%; top:-200px; --fallDur: 50s; --spinDur: 40s; --driftX:0px; --driftTo:-15px; }
+    .f9{ left: 45%; top:-80px;  --fallDur: 32s; --spinDur: 24s; --driftX:0px; --driftTo: 20px; }
+    .f10{ left: 50%; top:-150px; --fallDur: 44s; --spinDur: 34s; --driftX:0px; --driftTo:-30px; }
+    .f11{ left: 55%; top:-120px; --fallDur: 38s; --spinDur: 28s; --driftX:0px; --driftTo: 30px; }
+    .f12{ left: 60%; top:-190px; --fallDur: 52s; --spinDur: 42s; --driftX:0px; --driftTo:-20px; }
+    .f13{ left: 65%; top:-100px; --fallDur: 34s; --spinDur: 26s; --driftX:0px; --driftTo: 25px; }
+    .f14{ left: 70%; top:-170px; --fallDur: 46s; --spinDur: 36s; --driftX:0px; --driftTo:-35px; }
+    .f15{ left: 75%; top:-90px;  --fallDur: 30s; --spinDur: 22s; --driftX:0px; --driftTo: 20px; }
+    .f16{ left: 80%; top:-160px; --fallDur: 42s; --spinDur: 32s; --driftX:0px; --driftTo:-25px; }
+    .f17{ left: 85%; top:-120px; --fallDur: 36s; --spinDur: 28s; --driftX:0px; --driftTo: 30px; }
+    .f18{ left: 90%; top:-200px; --fallDur: 54s; --spinDur: 44s; --driftX:0px; --driftTo:-20px; }
+    .f19{ left: 95%; top:-80px;  --fallDur: 32s; --spinDur: 24s; --driftX:0px; --driftTo: 25px; }
+    .f20{ left: 98%; top:-150px; --fallDur: 48s; --spinDur: 38s; --driftX:0px; --driftTo:-30px; }
+  </style>
+</head>
+
+<body>
+  <div class="page">
+
+    <header>
+      <div class="title">
+        <h1>ZPI-51_appWEB-SaninMariia-FIOT-2025</h1>
+        <h2>з дисципліни «Проєктування WEB-застосувань»</h2>
+        <p><strong>Виконавець:</strong> студент(ка) групи ЗПІ-зп-51 &nbsp;&nbsp; <strong>ПІБ:</strong> Санін Марія Валеріївна</p>
+      </div>
+
+      <div class="photo" aria-label="Фото студента">
+        <div><strong></strong></div>
+        <div style="border:none; width:205px; height:200px; display:flex; align-items:center; overflow:hidden;">
+          <img src="images/photo.png" alt="Фото студента"
+            style="width:100%; height:auto;" />
+        </div>
+        <small></small>
+      </div>
+    </header>
+
+    <!-- Tabs for labs -->
+    <nav aria-label="Вкладки лабораторних робіт">
+      <ul class="tabs" id="labTabs">
+        <li><button class="is-active" data-lab="lab1">Лабораторна робота №1</button></li>
+        <li><button data-lab="lab2">Лабораторна робота №2</button></li>
+        <li><button data-lab="lab3">Лабораторна робота №3</button></li>
+        <li><button data-lab="lab4">Лабораторна робота №4</button></li>
+        <li><button data-lab="lab5">Лабораторна робота №5</button></li>
+        <li><button data-lab="lab6">Лабораторна робота №6</button></li>
+        <li><button data-lab="lab7">Лабораторна робота №7</button></li>
+        <li><button data-lab="lab8">Лабораторна робота №8</button></li>
+        <li><button data-lab="lab9">Лабораторна робота №9</button></li>
+      </ul>
+    </nav>
+
+    <div class="layout">
+      <!-- Left menu -->
+      <aside>
+        <div class="menu" id="leftMenu">
+          <button class="is-active wide" data-section="meta">Тема Мета Місце<br>розташування сайту, звіту</button>
+          <button class="wide" data-section="logic">Опис предметного середовища.<br>Опис бізнес-логіки</button>
+          <button class="wide" data-section="structure">Структура документа</button>
+
+          <button class="indent" data-section="table">HTML-код ТАБЛИЦІ</button>
+          <button class="indent" data-section="image">HTML-код ЗОБРАЖЕННЯ</button>
+          <button class="indent" data-section="list">HTML-код СПИСКІВ</button>
+          <button class="indent" data-section="form">HTML-код ФОРМИ</button>
+          <button class="indent" data-section="html">HTML-код</button>
+
+          <button class="wide" data-section="homePage">Головна сторінка WEB-застосунку</button>
+          <button class="wide" data-section="homeCode">Код головної сторінки WEB-застосунку</button>
+        </div>
+      </aside>
+
+      <main aria-label="Місце виведення інформації">
+        <h3 class="content-title" id="contentTitle">Лабораторна робота №1</h3>
+        <p class="hint" id="contentHint"></p>
+
+        <!-- ========== LAB 1 CONTENT ========== -->
+        <div class="lab" data-lab="lab1">
+
+          <section id="meta" aria-labelledby="h-meta">
+            <h3 id="h-meta">Тема, мета, посилання</h3>
+            <p><strong>Тема:</strong> Теги та атрибути HTML-документа. Структурна розмітка. Git/GitHub. Робота з репозиторіями. Опис логіки власного WEB-застосунку.</p>
+            <p><strong>Мета:</strong> набути навички роботи з GitHub, репозиторіями, HTML-документом (таблиці, зображення, посилання, списки, форми) та створити шаблон звітного HTML-документа для всіх лабораторних робіт.</p>
+
+            <h3>Посилання</h3>
+            <ul>
+              <li>Репозиторій WEB-застосунку: <a href="https://github.com/saninmv-zpi51/kpi1" target="_blank" rel="noreferrer"> https://github.com/saninmv-zpi51/kpi1</a></li>
+              <li>Жива сторінка WEB-застосунку (GitHub Pages):  <a href="https://saninmv-zpi51.github.io/kpi1/" target="_blank" rel="noreferrer"> https://saninmv-zpi51.github.io/kpi1/</a></li>
+              <li>Репозиторій звіту (appRECORD): <a href="#" target="_blank" rel="noreferrer">посилання</a></li>
+              <li>Жива сторінка звіту: <a href="#" target="_blank" rel="noreferrer">посилання</a></li>
+            </ul>
+          </section>
+
+          <section id="logic" hidden>
+            <h3>Тема власного WEB-застосунку</h3>
+            <p><em>Приклад (замінити на свою предметну галузь):</em> WEB-застосунок для обліку тренувань, харчування та прогресу користувача.</p>
+
+            <h3>Мета створення WEB-застосунку</h3>
+            <p>Автоматизувати ведення щоденника тренувань і харчування, забезпечити наочну статистику та контроль цілей.</p>
+
+            <h3>Скорочений опис предметного середовища (бізнес-логіка)</h3>
+            <p>Користувач додає записи про тренування, харчування та вагу. Система зберігає дані, показує історію, підраховує підсумки та формує звіти за період.</p>
+
+            <h3>Функціональні вимоги</h3>
+            <ul>
+              <li>Додавання/редагування/видалення записів (тренування, харчування, вага).</li>
+              <li>Перегляд списку записів за датами.</li>
+              <li>Фільтрація/пошук.</li>
+              <li>Виведення підсумків за день/тиждень.</li>
+            </ul>
+
+            <h3>Нефункціональні вимоги</h3>
+            <ul>
+              <li>Зручний інтерфейс, адаптивність під різні екрани.</li>
+              <li>Швидке завантаження сторінок.</li>
+              <li>Коректна семантична розмітка HTML.</li>
+              <li>Кросбраузерність (Chrome/Firefox/Edge).</li>
+            </ul>
+          </section>
+
+          <section id="structure" hidden>
+            <h3>Структура головної сторінки (семантична верстка)</h3>
+            <pre><code>&lt;header&gt;...&lt;/header&gt;
+              &lt;nav&gt;...&lt;/nav&gt;
+              &lt;main&gt;
+              &lt;section&gt;...&lt;/section&gt;
+              &lt;section&gt;...&lt;/section&gt;
+              &lt;/main&gt;
+              &lt;footer&gt;...&lt;/footer&gt;</code></pre>
+
+            <p>У цій лабораторній також окремо наводяться фрагменти HTML-коду для таблиці, зображення, списків і форми (та скріншоти результату).</p>
+          </section>
+
+          <section id="table" hidden>
+            <h3>HTML-код таблиці</h3>
+            <pre><code>&lt;table&gt;
+              &lt;caption&gt;Приклад таблиці&lt;/caption&gt;
+                &lt;thead&gt;
+               &lt;tr&gt;&lt;th&gt;Колонка 1&lt;/th&gt;&lt;th&gt;Колонка 2&lt;/th&gt;&lt;/tr&gt;
+                &lt;/thead&gt;
+              &lt;tbody&gt;
+                &lt;tr&gt;&lt;td&gt;Дані 1&lt;/td&gt;&lt;td&gt;Дані 2&lt;/td&gt;&lt;/tr&gt;
+              &lt;/tbody&gt;
+              &lt;/table&gt;
+            </code>
+            </pre>
+
+            <h3>Теорія (коротко)</h3>
+            <ul>
+              <li><code>&lt;table&gt;</code> — контейнер таблиці.</li>
+              <li><code>&lt;tr&gt;</code> — рядок; <code>&lt;th&gt;</code> — заголовкова комірка; <code>&lt;td&gt;</code> — звичайна комірка.</li>
+              <li><code>&lt;caption&gt;</code> — підпис таблиці; <code>&lt;thead&gt;</code>/<code>&lt;tbody&gt;</code> — логічні частини.</li>
+            </ul>
+            <p><em>Скріншот таблиці вставиш тут окремо як &lt;img&gt; після того, як зробиш скрін.</em></p>
+          </section>
+
+          <section id="image" hidden>
+            <h3>HTML-код зображення</h3>
+            <pre><code>&lt;img src="images/example.png" alt="Опис зображення" width="400"&gt;</code></pre>
+
+            <h3>Теорія (атрибути)</h3>
+            <ul>
+              <li><code>src</code> — шлях до зображення.</li>
+              <li><code>alt</code> — альтернативний текст (важливо для доступності та якщо файл не завантажився).</li>
+              <li><code>width</code>/<code>height</code> — розміри (краще контролювати через CSS, але в лабі можна показати атрибути).</li>
+            </ul>
+          </section>
+
+          <section id="list" hidden>
+            <h3>HTML-код списків</h3>
+            <pre><code>&lt;ul&gt;
+  &lt;li&gt;Маркірований пункт 1&lt;/li&gt;
+  &lt;li&gt;Маркірований пункт 2&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;Нумерований пункт 1&lt;/li&gt;
+  &lt;li&gt;Нумерований пункт 2&lt;/li&gt;
+&lt;/ol&gt;</code></pre>
+
+            <h3>Теорія</h3>
+            <ul>
+              <li><code>&lt;ul&gt;</code> — маркірований список, <code>&lt;ol&gt;</code> — нумерований, <code>&lt;li&gt;</code> — елемент списку.</li>
+              <li>Атрибут <code>type</code> для <code>&lt;ol&gt;</code> може змінювати нумерацію (1, A, a, I, i).</li>
+            </ul>
+          </section>
+
+          <section id="form" hidden>
+            <h3>HTML-код форми</h3>
+            <pre><code>&lt;form action="#" method="post"&gt;
+  &lt;label&gt;Ім'я:
+    &lt;input type="text" name="name" required&gt;
+  &lt;/label&gt;
+
+  &lt;label&gt;Email:
+    &lt;input type="email" name="email" required&gt;
+  &lt;/label&gt;
+
+  &lt;label&gt;Повідомлення:
+    &lt;textarea name="message" rows="4"&gt;&lt;/textarea&gt;
+  &lt;/label&gt;
+
+  &lt;button type="submit"&gt;Надіслати&lt;/button&gt;
+&lt;/form&gt;</code></pre>
+          </section>
+
+          <section id="html" hidden>
+            <h3>HTML-код (фрагмент)</h3>
+            <p>Тут можна вставити основні частини HTML-коду сторінки звіту або головної сторінки застосунку.</p>
+          </section>
+
+          <section id="homePage" hidden>
+            <h3>Головна сторінка WEB-застосунку</h3>
+            <p>Сюди додаєш скрін/опис головної сторінки твого реального застосунку (з іншого репозиторію).</p>
+          </section>
+
+          <section id="homeCode" hidden>
+            <h3>Код головної сторінки WEB-застосунку</h3>
+            <p>Сюди вставляєш HTML-код головної сторінки твого застосунку (або основний фрагмент).</p>
+          </section>
+
+        </div>
+
+        <div class="lab" data-lab="lab2" hidden><p>Лабораторна №2 </p></div>
+        <div class="lab" data-lab="lab3" hidden><p>Лабораторна №3 </p></div>
+        <div class="lab" data-lab="lab4" hidden><p>Лабораторна №4</p></div>
+        <div class="lab" data-lab="lab5" hidden><p>Лабораторна №5 </p></div>
+        <div class="lab" data-lab="lab6" hidden><p>Лабораторна №6 </p></div>
+        <div class="lab" data-lab="lab7" hidden><p>Лабораторна №7 </p></div>
+        <div class="lab" data-lab="lab8" hidden><p>Лабораторна №8 </p></div>
+        <div class="lab" data-lab="lab9" hidden><p>Лабораторна №9 </p></div>
+
+      </main>
+    </div>
+
+    <footer>
+      © Звітний HTML-документ лабораторних робіт (FIOT-2025)
+    </footer>
+  </div>
+  <div class="kyiv-strip" aria-hidden="true"></div>
+
+  <script>
+    // Tabs: labs
+    const tabBar = document.getElementById('labTabs');
+    const labs = document.querySelectorAll('.lab');
+    const title = document.getElementById('contentTitle');
+
+    tabBar.addEventListener('click', (e) => {
+      const btn = e.target.closest('button[data-lab]');
+      if(!btn) return;
+
+      tabBar.querySelectorAll('button').forEach(b => b.classList.remove('is-active'));
+      btn.classList.add('is-active');
+
+      const labId = btn.dataset.lab;
+      labs.forEach(l => l.hidden = (l.dataset.lab !== labId));
+
+      const n = labId.replace('lab','');
+      title.textContent = `Лабораторна робота №${n}`;
+
+      // при перемиканні лаби — показати перший розділ (meta)
+      setActiveSection('meta');
+    });
+
+    // Left menu: sections
+    const menu = document.getElementById('leftMenu');
+
+    function setActiveSection(sectionId){
+      // тільки всередині активної лаби
+      const activeLab = [...labs].find(l => !l.hidden);
+      if(!activeLab) return;
+
+      activeLab.querySelectorAll('section').forEach(s => s.hidden = (s.id !== sectionId));
+
+      menu.querySelectorAll('button').forEach(b => b.classList.remove('is-active'));
+      const activeBtn = menu.querySelector(`button[data-section="${sectionId}"]`);
+      if(activeBtn) activeBtn.classList.add('is-active');
+    }
+
+    menu.addEventListener('click', (e) => {
+      const btn = e.target.closest('button[data-section]');
+      if(!btn) return;
+      setActiveSection(btn.dataset.section);
+    });
+  </script>
+  <div class="snow-bg" aria-hidden="true">
+  <span class="flake f1"></span>
+  <span class="flake f2"></span>
+  <span class="flake f3"></span>
+  <span class="flake f4"></span>
+  <span class="flake f5"></span>
+  <span class="flake f6"></span>
+  <span class="flake f7"></span>
+  <span class="flake f8"></span>
+  <span class="flake f9"></span>
+  <span class="flake f10"></span>
+  <span class="flake f11"></span>
+  <span class="flake f12"></span>
+  <span class="flake f13"></span>
+  <span class="flake f14"></span>
+  <span class="flake f15"></span>
+  <span class="flake f16"></span>
+  <span class="flake f17"></span>
+  <span class="flake f18"></span>
+  <span class="flake f19"></span>
+  <span class="flake f20"></span>
+</div>
+</body>
+</html>
