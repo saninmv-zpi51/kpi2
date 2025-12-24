@@ -34,14 +34,14 @@
       border: 2px solid transparent; /* щоб на скріншоті було чисто */
     }
 
-    /* Header */
     header{
-      display:grid;
-      grid-template-columns: 1fr 170px;
+      display: grid;
+      grid-template-columns: 90px 1fr 120px 90px;
+      align-items: center;
       gap: 12px;
-      align-items:start;
       margin-bottom: 12px;
     }
+
     .title{
       text-align:center;
       line-height:1.2;
@@ -63,21 +63,26 @@
     }
 
     .photo{
-      border: none;
+      width: 120px;
       height: 120px;
-      display:flex;
-      flex-direction:column;
-      align-items:center;
-      justify-content:center;
-      gap:6px;
-      font-size:14px;
+      border: 2px solid var(--line);
+      overflow: hidden;
+      border-radius: 8px;
     }
+
+.photo img{
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
     .photo small{ color: var(--muted); }
 
     /* Tabs */
     .tabs{
       display:flex;
-      gap:10px;
+      gap: 10px;
+      width: 100%;
       flex-wrap:wrap;
       justify-content:space-between;
       margin: 8px 0 14px;
@@ -86,12 +91,13 @@
     }
     .tabs button{
       border: none;
+      flex: 1;
       background: #B4DBDB;
       border-radius: 6px;
       padding: 12px 14px;
       cursor:pointer;
       font-size: 14px;
-      text-align:left;
+      text-align:center;
       font-family: 'Bona Nova', serif;
       color: #00232e;
       box-shadow:
@@ -115,16 +121,12 @@
         color: #063c4d;
         box-shadow: 0px 0px 4px #548384;
     }
-
-    /* Layout under tabs */
     .layout{
       display:grid;
       grid-template-columns: 300px 1fr;
       gap: 16px;
       align-items:start;
     }
-
-    /* Left menu (oval buttons) */
     aside{
       padding-top: 4px;
     }
@@ -167,9 +169,9 @@
     }
     .menu .indent{
       margin-right: auto;
-      width: calc(100% - 26px);
+      width: calc(100% - 6px);
       text-align:center;
-      padding: 10px 12px;
+      padding: 12px 14px;
     }
     .menu .wide{
       padding: 14px 14px;
@@ -195,7 +197,6 @@
       font-size: 14px;
     }
 
-    /* Sections */
     section[hidden]{ display:none !important; }
     section h3{
       margin: 12px 0 8px;
@@ -310,7 +311,6 @@
       z-index: 0;
     }
 
-
     @keyframes kyiv-move{
       from{
         background-position-x: 0;
@@ -320,8 +320,6 @@
       }
     }
   
-
-
     .page{
       position: relative;
       z-index: 2;
@@ -344,7 +342,6 @@
         fall var(--fallDur) linear infinite,
         spin var(--spinDur) linear infinite;
     }
-
 
     @keyframes fall{
       from { transform: translate(var(--driftX), -40px) rotate(0deg); }
@@ -374,6 +371,27 @@
     .f18{ left: 90%; top:-200px; --fallDur: 54s; --spinDur: 44s; --driftX:0px; --driftTo:-20px; }
     .f19{ left: 95%; top:-80px;  --fallDur: 32s; --spinDur: 24s; --driftX:0px; --driftTo: 25px; }
     .f20{ left: 98%; top:-150px; --fallDur: 48s; --spinDur: 38s; --driftX:0px; --driftTo:-30px; }
+
+    .logo{
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .logo img{
+      max-width: 80px;
+      max-height: 80px;
+    }
+    .logo img,
+      .photo img{
+        opacity: 0.75;
+        transition: opacity 0.3s ease;
+      }
+
+      .logo img:hover,
+      .photo img:hover{
+        opacity: 1;
+      }
   </style>
 </head>
 
@@ -381,21 +399,26 @@
   <div class="page">
 
     <header>
+      <div class="logo logo1">
+        <img src="images/logo1.png" alt="Герб КПІ">
+      </div>
       <div class="title">
         <h1>ZPI-51_appWEB-SaninMariia-FIOT-2025</h1>
-        <h2>з дисципліни «Проєктування WEB-застосувань»</h2>
-        <p><strong>Виконавець:</strong> студент(ка) групи ЗПІ-зп-51 &nbsp;&nbsp; <strong>ПІБ:</strong> Санін Марія Валеріївна</p>
+        <h2>з дисципліни «Проєктування WEB-застосунків»</h2>
+        <p>
+          <strong>Виконавець:</strong> студентка групи ЗПІ-зп-51<br>
+          <strong>ПІБ:</strong> Санін Марія Валеріївна
+        </p>
       </div>
 
       <div class="photo" aria-label="Фото студента">
-        <div><strong></strong></div>
-        <div style="border:none; width:205px; height:200px; display:flex; align-items:center; overflow:hidden;">
-          <img src="images/photo.png" alt="Фото студента"
-            style="width:100%; height:auto;" />
-        </div>
-        <small></small>
+        <img src="images/photo.png" alt="Фото студента">
+      </div>
+      <div class="logo logo2">
+        <img src="images/logo2.png" alt="Герб ФІОТ">
       </div>
     </header>
+
 
     <!-- Tabs for labs -->
     <nav aria-label="Вкладки лабораторних робіт">
@@ -435,7 +458,6 @@
         <h3 class="content-title" id="contentTitle">Лабораторна робота №1</h3>
         <p class="hint" id="contentHint"></p>
 
-        <!-- ========== LAB 1 CONTENT ========== -->
         <div class="lab" data-lab="lab1">
 
           <section id="meta" aria-labelledby="h-meta">
@@ -447,27 +469,24 @@
             <ul>
               <li>Репозиторій WEB-застосунку: <a href="https://github.com/saninmv-zpi51/kpi1" target="_blank" rel="noreferrer"> https://github.com/saninmv-zpi51/kpi1</a></li>
               <li>Жива сторінка WEB-застосунку (GitHub Pages):  <a href="https://saninmv-zpi51.github.io/kpi1/" target="_blank" rel="noreferrer"> https://saninmv-zpi51.github.io/kpi1/</a></li>
-              <li>Репозиторій звіту (appRECORD): <a href="#" target="_blank" rel="noreferrer">посилання</a></li>
-              <li>Жива сторінка звіту: <a href="#" target="_blank" rel="noreferrer">посилання</a></li>
+              <li>Репозиторій звіту (appRECORD): <a href="https://github.com/saninmv-zpi51/kpi2" target="_blank" rel="noreferrer">https://github.com/saninmv-zpi51/kpi2</a></li>
+              <li>Жива сторінка звіту: <a href="https://saninmv-zpi51.github.io/kpi2/" target="_blank" rel="noreferrer">https://saninmv-zpi51.github.io/kpi2/</a></li>
             </ul>
           </section>
 
           <section id="logic" hidden>
             <h3>Тема власного WEB-застосунку</h3>
-            <p><em>Приклад (замінити на свою предметну галузь):</em> WEB-застосунок для обліку тренувань, харчування та прогресу користувача.</p>
-
+            <p>WEB-застосунок для інформування користувачів про музейні виставки,події та експозиції.</p>
             <h3>Мета створення WEB-застосунку</h3>
-            <p>Автоматизувати ведення щоденника тренувань і харчування, забезпечити наочну статистику та контроль цілей.</p>
-
+            <p>Забезпечити зручний доступ до актуальної інформації про виставки в музеях, їх тематику, дати проведення, місце та короткий опис,а також сприяти популяризації культурної спадщини.</p>
             <h3>Скорочений опис предметного середовища (бізнес-логіка)</h3>
-            <p>Користувач додає записи про тренування, харчування та вагу. Система зберігає дані, показує історію, підраховує підсумки та формує звіти за період.</p>
-
+            <p>WEB-застосунок надає користувачам інформацію про поточні та майбутні музейні виставки. Користувач може переглядати список виставок,отримувати детальну інформацію про кожну експозицію, дізнаватись про місце проведення, дати та тематику заходу. Адміністратор має можливість додавати, редагувати та видаляти інформацію про виставки.</p>
             <h3>Функціональні вимоги</h3>
             <ul>
-              <li>Додавання/редагування/видалення записів (тренування, харчування, вага).</li>
+              <li>Додавання/редагування/видалення записів (музеї, виставки, театр).</li>
               <li>Перегляд списку записів за датами.</li>
               <li>Фільтрація/пошук.</li>
-              <li>Виведення підсумків за день/тиждень.</li>
+              <li>Виведення анонсів за день/тиждень.</li>
             </ul>
 
             <h3>Нефункціональні вимоги</h3>
@@ -549,35 +568,73 @@
           <section id="form" hidden>
             <h3>HTML-код форми</h3>
             <pre><code>&lt;form action="#" method="post"&gt;
-  &lt;label&gt;Ім'я:
-    &lt;input type="text" name="name" required&gt;
-  &lt;/label&gt;
+              &lt;label&gt;Ім'я:
+                &lt;input type="text" name="name" required&gt;
+              &lt;/label&gt;
 
-  &lt;label&gt;Email:
-    &lt;input type="email" name="email" required&gt;
-  &lt;/label&gt;
+              &lt;label&gt;Email:
+                &lt;input type="email" name="email" required&gt;
+              &lt;/label&gt;
 
-  &lt;label&gt;Повідомлення:
-    &lt;textarea name="message" rows="4"&gt;&lt;/textarea&gt;
-  &lt;/label&gt;
+              &lt;label&gt;Повідомлення:
+                &lt;textarea name="message" rows="4"&gt;&lt;/textarea&gt;
+              &lt;/label&gt;
 
-  &lt;button type="submit"&gt;Надіслати&lt;/button&gt;
-&lt;/form&gt;</code></pre>
+              &lt;button type="submit"&gt;Надіслати&lt;/button&gt;
+              &lt;/form&gt;</code></pre>
           </section>
 
           <section id="html" hidden>
             <h3>HTML-код (фрагмент)</h3>
-            <p>Тут можна вставити основні частини HTML-коду сторінки звіту або головної сторінки застосунку.</p>
+            <pre><code>&lt;header&gt;
+              &lt;div class="title"&gt;
+                &lt;h1&gt;ZPI-51_appWEB-SaninMariia-FIOT-2025&lt;/h1&gt;
+                &lt;h2&gt;з дисципліни «Проєктування WEB-застосунків»&lt;/h2&gt;
+                &lt;p&gt;
+                  &lt;strong&gt;Виконавець:&lt;/strong&gt;
+                  студентка групи ЗПІ-зп-51,
+                  &lt;strong&gt;ПІБ:&lt;/strong&gt;
+                  Санін Марія Валеріївна
+                &lt;/p&gt;
+              &lt;/div&gt;
+            &lt;/header&gt;
+            </code></pre>
           </section>
 
           <section id="homePage" hidden>
             <h3>Головна сторінка WEB-застосунку</h3>
-            <p>Сюди додаєш скрін/опис головної сторінки твого реального застосунку (з іншого репозиторію).</p>
+            <p>Нижче наведено скріншот головної сторінки WEB-застосунку, створеного у межах лабораторної роботи.</p>
+
+            <img 
+              src="images/homepage.png" 
+              alt="Головна сторінка WEB-застосунку"
+              style="max-width:100%; border:1px solid #333; margin-top:10px;"
+            >
           </section>
 
           <section id="homeCode" hidden>
             <h3>Код головної сторінки WEB-застосунку</h3>
-            <p>Сюди вставляєш HTML-код головної сторінки твого застосунку (або основний фрагмент).</p>
+            <pre><code>&lt;header&gt;
+              &lt;h1&gt;Інформація про музейні виставки&lt;/h1&gt;
+              &lt;nav&gt;
+                &lt;ul&gt;
+                  &lt;li&gt;&lt;a href="#exhibitions"&gt;Виставки&lt;/a&gt;&lt;/li&gt;
+                  &lt;li&gt;&lt;a href="#museums"&gt;Музеї&lt;/a&gt;&lt;/li&gt;
+                  &lt;li&gt;&lt;a href="#contacts"&gt;Контакти&lt;/a&gt;&lt;/li&gt;
+                &lt;/ul&gt;
+              &lt;/nav&gt;
+            &lt;/header&gt;
+
+            &lt;main&gt;
+              &lt;section id="exhibitions"&gt;
+                &lt;h2&gt;Поточні виставки&lt;/h2&gt;
+                &lt;p&gt;
+                  На сторінці представлено актуальну інформацію
+                  про музейні виставки та культурні події.
+                &lt;/p&gt;
+              &lt;/section&gt;
+            &lt;/main&gt;
+            </code></pre>
           </section>
 
         </div>
